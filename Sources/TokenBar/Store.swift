@@ -15,7 +15,11 @@ final class UsageStore: ObservableObject {
     @Published private(set) var states: [Provider: ProviderState] = [.claude: .off, .codex: .off]
     @Published var monitorClaude: Bool { didSet { save("monitorClaude", monitorClaude); sync() } }
     @Published var monitorCodex: Bool { didSet { save("monitorCodex", monitorCodex); sync() } }
-    @Published var renewalDay: Int { didSet { save("renewalDay", renewalDay); updateCosts() } }
+    /// When the Claude plan was first bought (or any past renewal date). Renewals are counted forward from it.
+    @Published var purchaseDate: Date { didSet { save("purchaseDate", purchaseDate); updateCosts() } }
+    @Published var yearlyPlan: Bool { didSet { save("yearlyPlan", yearlyPlan) } }
+    /// Day of month the monthly usage cycle starts on (the purchase day).
+    var renewalDay: Int { Calendar.current.component(.day, from: purchaseDate) }
     /// Estimated $ (API list prices) from Claude Code's local logs; nil until first computed.
     @Published private(set) var costReport: CostReport?
     private let scanner = LogScanner()
@@ -43,8 +47,13 @@ final class UsageStore: ObservableObject {
         }
         monitorClaude = d.bool(forKey: "monitorClaude")
         monitorCodex = d.bool(forKey: "monitorCodex")
-        let rd = d.integer(forKey: "renewalDay")
-        renewalDay = (1...31).contains(rd) ? rd : 1
+        if let p = d.object(forKey: "purchaseDate") as? Date { purchaseDate = p }
+        else {
+            // Migrate the old "renews on day N" setting into a purchase date.
+            let rd = d.integer(forKey: "renewalDay")
+            purchaseDate = CostMath.cycleRange(renewalDay: (1...31).contains(rd) ? rd : 1, now: Date()).start
+        }
+        yearlyPlan = d.bool(forKey: "yearlyPlan")
         let i = d.integer(forKey: "intervalMinutes")
         intervalMinutes = [5, 15, 30].contains(i) ? i : 5   // 1 min was dropped: the usage endpoints rate-limit
     }

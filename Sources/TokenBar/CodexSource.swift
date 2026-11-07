@@ -14,6 +14,9 @@ enum CodexSource {
         var headers = ["Authorization": "Bearer \(access)"]
         if let acct = tokens["account_id"] as? String { headers["ChatGPT-Account-Id"] = acct }
         let data = try await HTTP.get("https://chatgpt.com/backend-api/wham/usage", headers: headers)
-        return try UsageParser.codex(data)
+        var snap = try UsageParser.codex(data)
+        let jwt = (tokens["id_token"] as? String) ?? access
+        snap.renewsAt = UsageParser.codexRenewal(jwt: jwt) ?? UsageParser.codexRenewal(jwt: access)
+        return snap
     }
 }

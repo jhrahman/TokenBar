@@ -106,6 +106,25 @@ public enum CostMath {
         return DateRange(start: renewal(monthOffset: -1), end: thisMonth)
     }
 
+    /// Next renewal after `now`, counting forward from the purchase date. Monthly keeps the purchase day
+    /// (clamped to short months); yearly keeps the purchase day and month.
+    public static func nextRenewal(purchase: Date, yearly: Bool, now: Date, calendar: Calendar = .current) -> Date {
+        if purchase > now { return purchase }   // an upcoming renewal date was entered
+        let p = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: purchase)
+        var n = 1
+        while true {
+            let base = calendar.date(from: DateComponents(year: p.year, month: p.month, day: 1))!
+            let months = yearly ? 12 * n : n
+            let m = calendar.date(byAdding: .month, value: months, to: base)!
+            let days = calendar.range(of: .day, in: .month, for: m)!.count
+            var c = calendar.dateComponents([.year, .month], from: m)
+            c.day = min(p.day ?? 1, days)
+            let d = calendar.date(from: c)!
+            if d > now { return d }
+            n += 1
+        }
+    }
+
     public static func buckets(_ entries: [CostEntry], range: DateRange, step: TimeInterval) -> [CostBucket] {
         let n = max(1, Int(ceil(range.end.timeIntervalSince(range.start) / step)))
         var out = (0..<n).map { i in

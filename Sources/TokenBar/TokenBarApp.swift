@@ -2,6 +2,7 @@ import SwiftUI
 import TokenBarCore
 
 let ember = Color(red: 0xE8 / 255, green: 0x60 / 255, blue: 0x3C / 255)
+let deepYellow = Color(red: 0xE0 / 255, green: 0xA8 / 255, blue: 0x00 / 255)
 let mint = Color(red: 0x2F / 255, green: 0xBF / 255, blue: 0x9F / 255)
 
 @main
@@ -32,7 +33,7 @@ struct PopoverView: View {
                 Text("Nothing to monitor. Turn on Claude or Codex in Settings.")
                     .foregroundStyle(.secondary)
             }
-            ForEach(store.enabled) { ProviderRow(provider: $0, state: store.states[$0] ?? .off, note: store.notes[$0], cost: $0 == .claude ? store.costReport : nil) }
+            ForEach(store.enabled) { ProviderRow(provider: $0, purchaseDate: store.purchaseDate, yearly: store.yearlyPlan, state: store.states[$0] ?? .off, note: store.notes[$0], cost: $0 == .claude ? store.costReport : nil) }
             Divider()
             HStack {
                 Button("Settings…") { SettingsWindow.show() }
@@ -49,6 +50,8 @@ struct PopoverView: View {
 
 struct ProviderRow: View {
     let provider: Provider
+    var purchaseDate = Date()
+    var yearly = false
     let state: ProviderState
     var note: String?
     var cost: CostReport?
@@ -93,8 +96,27 @@ struct ProviderRow: View {
                 .buttonStyle(.plain)
                 .help("Open cost details")
             }
+            if let date = renewalDate {
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar")
+                    Text("Renews \(Self.renewalFormat.string(from: date))")
+                }
+                .font(.callout.weight(.semibold))
+                .foregroundStyle(deepYellow)
+            }
             if let note { Text(note).font(.caption).foregroundStyle(.orange) }
         }
+    }
+
+    static let renewalFormat: DateFormatter = {
+        let f = DateFormatter(); f.locale = Locale(identifier: "en_US_POSIX"); f.dateFormat = "EEE, d MMM yyyy"; return f
+    }()
+
+    /// Codex: the subscription end date from the login token. Claude: next billing day set in Settings.
+    var renewalDate: Date? {
+        if provider == .claude { return CostMath.nextRenewal(purchase: purchaseDate, yearly: yearly, now: Date()) }
+        if case .ok(let snap) = state, let d = snap.renewsAt, d > Date() { return d }
+        return nil
     }
 
     func line(_ name: String, _ w: UsageWindow, _ reset: String, dollars: Double? = nil) -> some View {

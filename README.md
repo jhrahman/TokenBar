@@ -9,13 +9,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/jhrahman/TokenBar/releases/download/v0.1.0/TokenBar-0.1.0.dmg">
+  <a href="https://github.com/jhrahman/TokenBar/releases/download/v0.2.0/TokenBar-0.2.0.dmg">
     <img alt="Download TokenBar for macOS (.dmg)" src="https://img.shields.io/badge/%E2%AC%87%20Download-TokenBar%20for%20macOS%20(.dmg)-E8603C?style=for-the-badge&logo=apple&logoColor=white">
   </a>
 </p>
 
 <p align="center">
-  <img alt="Version 0.1.0" src="https://img.shields.io/badge/version-0.1.0-E8603C?style=for-the-badge">
+  <img alt="Version 0.2.0" src="https://img.shields.io/badge/version-0.2.0-E8603C?style=for-the-badge">
   <img alt="macOS 13 and newer" src="https://img.shields.io/badge/macOS-13%2B-1C1D21?style=for-the-badge&logo=apple&logoColor=white">
   <img alt="Apple Silicon and Intel" src="https://img.shields.io/badge/Apple%20Silicon%20%7C%20Intel-universal-2FBF9F?style=for-the-badge">
 </p>
@@ -44,6 +44,7 @@ It has no Dock icon, no account to create, no database and no analytics. It just
 - Your 5 hour usage as a percentage, with a live countdown like "resetting in 1.3h"
 - Your weekly usage as a percentage, with the exact reset time like "resetting Wed, 11 Nov, 6 PM"
 - Times always use your Mac's current time zone, so they follow you when you travel
+- Your next renewal date, highlighted in deep yellow under each provider. Claude's comes from the purchase date and Monthly/Yearly choice in Settings. Codex's is read from your Codex login when it provides one (otherwise the line is hidden)
 - The menu bar icon is drawn from what you have switched on: two bars if you watch both Claude and Codex, one bar if you watch just one
 
 **Cost view (Claude)**
@@ -55,7 +56,7 @@ Click "This cycle on this Mac" in the popover to open a details window. It shows
 - A hover readout for any day or hour, and a running total view
 - How far you are through your billing cycle
 
-You tell TokenBar which day of the month your plan renews, and the monthly total starts over on that day.
+You give TokenBar your Claude plan's purchase date (or any past or upcoming payment date), and the monthly total starts over on that day of the month.
 
 ## Things worth knowing before you install
 
@@ -80,7 +81,7 @@ There are two ways to get TokenBar. Downloading a release is the easy one. Build
 
 ### Option A: Download a release
 
-1. Click the **Download** badge at the top of this page to get `TokenBar-0.1.0.dmg` (or find it on the [latest release](https://github.com/jhrahman/TokenBar/releases/latest))
+1. Click the **Download** badge at the top of this page to get `TokenBar-0.2.0.dmg` (or find it on the [latest release](https://github.com/jhrahman/TokenBar/releases/latest))
 2. Double click the disk image and drag TokenBar onto the Applications shortcut
 3. Jump to "Open it for the first time" below
 
@@ -107,15 +108,15 @@ cd TokenBar
 
 When it finishes you will have these in the `build` folder:
 
-- `TokenBar-0.1.0.dmg`, a disk image for installing
+- `TokenBar-0.2.0.dmg`, a disk image for installing
 - `TokenBar.app`, the app itself
-- `TokenBar-0.1.0.zip`, handy for sharing with your own devices
+- `TokenBar-0.2.0.zip`, handy for sharing with your own devices
 
 It is a universal app, so the same build runs on both Apple Silicon and Intel Macs.
 
 #### 3. Install from the disk image
 
-Double click `build/TokenBar-0.1.0.dmg`. A window opens showing TokenBar and an Applications shortcut. Drag TokenBar onto Applications, then eject the disk image. Keeping the app in Applications also lets the "Launch at login" option work properly.
+Double click `build/TokenBar-0.2.0.dmg`. A window opens showing TokenBar and an Applications shortcut. Drag TokenBar onto Applications, then eject the disk image. Keeping the app in Applications also lets the "Launch at login" option work properly.
 
 If you prefer, you can skip the disk image and drag `build/TokenBar.app` into Applications yourself.
 
@@ -146,7 +147,7 @@ Open Settings from the popover. You can:
 
 - Turn on **Launch at login**
 - Choose to monitor Claude, Codex, both, or neither. Changes apply instantly and each change shows a small confirmation
-- Set the day your Claude plan renews, which controls the billing cycle in the cost view
+- Set your Claude plan's purchase or renewal date (typed as DD / MM / YYYY) and whether it bills **Monthly** or **Yearly**. This drives the renewal date in the popover and the billing cycle in the cost view
 - Pick how often TokenBar refreshes: every 5, 15 or 30 minutes
 
 The refresh options start at 5 minutes on purpose. The usage endpoints rate limit apps that ask too often.
@@ -163,6 +164,8 @@ The refresh options start at 5 minutes on purpose. The usage endpoints rate limi
 TokenBar talks to exactly two kinds of places: Anthropic's usage service for Claude, and OpenAI's usage service for Codex. It sends your existing login to them to ask for your numbers, the same way the official tools do. It has no analytics, no tracking and no servers of its own. Your settings are stored on your Mac in the standard app preferences.
 
 For the dollar estimates it reads Claude Code's log files in `~/.claude/projects`. It only reads them. It never changes them and never uploads them.
+
+The Codex renewal date is read on your Mac from the dates inside your Codex login file. That file is only read, never changed, and nothing from it is stored or sent anywhere except the login header used for the usage request. Only the resulting date is kept.
 
 ## Uninstall
 

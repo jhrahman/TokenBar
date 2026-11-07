@@ -9,7 +9,11 @@ public struct UsageWindow: Equatable, Codable {
 public struct UsageSnapshot: Equatable, Codable {
     public var fiveHour: UsageWindow?
     public var weekly: UsageWindow?
-    public init(fiveHour: UsageWindow?, weekly: UsageWindow?) { self.fiveHour = fiveHour; self.weekly = weekly }
+    /// Next subscription renewal, when the provider tells us (Codex). Claude uses the billing day from Settings.
+    public var renewsAt: Date?
+    public init(fiveHour: UsageWindow?, weekly: UsageWindow?, renewsAt: Date? = nil) {
+        self.fiveHour = fiveHour; self.weekly = weekly; self.renewsAt = renewsAt
+    }
 }
 
 public enum UsageError: Error, Equatable {
@@ -61,6 +65,20 @@ public enum UsageParser {
         else if let p, s == nil, let pl = p.1, pl > 6 * 3600 { snap = UsageSnapshot(fiveHour: nil, weekly: p.0) }
         if snap.fiveHour == nil && snap.weekly == nil { throw UsageError.badResponse }
         return snap
+    }
+
+    /// ChatGPT access/id tokens are JWTs; the `https://api.openai.com/auth` claim carries `chatgpt_subscription_active_until`.
+    public static func codexRenewal(jwt: String) -> Date? {
+        let parts = jwt.split(separator: ".")
+        guard parts.count >= 2 else { return nil }
+        var b64 = parts[1].replacingOccurrences(of: "-", with: "+").replacingOccurrences(of: "_", with: "/")
+        while b64.count % 4 != 0 { b64 += "=" }
+        guard let data = Data(base64Encoded: b64),
+              let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let auth = root["https://api.openai.com/auth"] as? [String: Any] else { return nil }
+        if let s = auth["chatgpt_subscription_active_until"] as? String { return parseISO(s) }
+        if let n = (auth["chatgpt_subscription_active_until"] as? NSNumber)?.doubleValue { return Date(timeIntervalSince1970: n) }
+        return nil
     }
 
     /// Handles "2026-11-07T12:00:00.090498+00:00" (microseconds) and plain forms.
