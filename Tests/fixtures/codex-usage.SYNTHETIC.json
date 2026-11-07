@@ -1,0 +1,10 @@
+{
+  "_note": "SYNTHETIC: hand-written from memory of the ChatGPT backend. Replace with a real capture from a Mac with Codex logged in.",
+  "plan_type": "plus",
+  "rate_limit": {
+    "allowed": true,
+    "limit_reached": false,
+    "primary_window":   { "used_percent": 12, "limit_window_seconds": 18000,  "reset_after_seconds": 4680,  "reset_at": 1893456000 },
+    "secondary_window": { "used_percent": 41, "limit_window_seconds": 604800, "reset_after_seconds": 250000, "reset_at": 1893700000 }
+  }
+}

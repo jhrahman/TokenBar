@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34363D"/>
+      <stop offset="1" stop-color="#141517"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="ember" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFA478"/>
+      <stop offset="1" stop-color="#E8603C"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8CF3DC"/>
+      <stop offset="1" stop-color="#2FBF9F"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <clipPath id="tile"><rect x="100" y="100" width="824" height="824" rx="190"/></clipPath>
+  </defs>
+  <!-- glass tile -->
+  <rect x="100" y="100" width="824" height="824" rx="190" fill="url(#bg)" filter="url(#shadow)"/>
+  <g clip-path="url(#tile)">
+    <rect x="100" y="100" width="824" height="440" fill="url(#gloss)"/>
+  </g>
+  <rect x="103" y="103" width="818" height="818" rx="187" fill="none" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="6"/>
+  <!-- bar 1 (top): track + fill -->
+  <rect x="252" y="318" width="520" height="124" rx="62" fill="#FFFFFF" fill-opacity="0.09"/>
+  <rect x="252" y="318" width="380" height="124" rx="62" fill="url(#ember)"/>
+  <!-- bar 2 (bottom): track + fill -->
+  <rect x="252" y="582" width="520" height="124" rx="62" fill="#FFFFFF" fill-opacity="0.09"/>
+  <rect x="252" y="582" width="236" height="124" rx="62" fill="url(#mint)"/>
+</svg>

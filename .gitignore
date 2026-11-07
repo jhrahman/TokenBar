@@ -1,0 +1,18 @@
+# Build output
+.build/
+build/
+*.dmg
+*.zip
+
+# macOS / Xcode
+.DS_Store
+*.xcuserstate
+xcuserdata/
+.swiftpm/
+
+# Never commit secrets or local config
+*.env
+.env*
+*.p12
+*.pem
+*.key
