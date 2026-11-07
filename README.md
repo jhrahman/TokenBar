@@ -26,6 +26,7 @@
   <img alt="No dependencies" src="https://img.shields.io/badge/dependencies-none-2FBF9F">
   <img alt="No analytics" src="https://img.shields.io/badge/analytics-none-2FBF9F">
   <img alt="Menu bar app" src="https://img.shields.io/badge/type-menu%20bar%20app-8E8E93">
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-2FBF9F"></a>
 </p>
 
 ---
@@ -189,3 +190,7 @@ Run `swift build` for a quick debug build. The unit tests use XCTest, so running
 4. Update the version number in the Download badge link and the version badge at the top of this README
 
 The version also shows at the bottom of the app's Settings window.
+
+## License
+
+TokenBar is released under the [MIT License](LICENSE).
