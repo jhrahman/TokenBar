@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/jhrahman/TokenBar/releases/latest">
+  <a href="https://github.com/jhrahman/TokenBar/releases/download/v0.1.0/TokenBar-0.1.0.dmg">
     <img alt="Download TokenBar for macOS (.dmg)" src="https://img.shields.io/badge/%E2%AC%87%20Download-TokenBar%20for%20macOS%20(.dmg)-E8603C?style=for-the-badge&logo=apple&logoColor=white">
   </a>
 </p>
@@ -79,7 +79,7 @@ There are two ways to get TokenBar. Downloading a release is the easy one. Build
 
 ### Option A: Download a release
 
-1. Click the **Download** badge at the top of this page (or open the [latest release](https://github.com/jhrahman/TokenBar/releases/latest)) and download `TokenBar-0.1.0.dmg`
+1. Click the **Download** badge at the top of this page to get `TokenBar-0.1.0.dmg` (or find it on the [latest release](https://github.com/jhrahman/TokenBar/releases/latest))
 2. Double click the disk image and drag TokenBar onto the Applications shortcut
 3. Jump to "Open it for the first time" below
 
@@ -186,5 +186,6 @@ Run `swift build` for a quick debug build. The unit tests use XCTest, so running
 1. Change the number in the `VERSION` file, for example to `0.2.0`
 2. Run `./build.sh`. The version is stamped into the app and into the file names
 3. Create a GitHub release tagged `v0.2.0` and upload `build/TokenBar-0.2.0.dmg` and `build/TokenBar-0.2.0.zip`
+4. Update the version number in the Download badge link and the version badge at the top of this README
 
 The version also shows at the bottom of the app's Settings window.
