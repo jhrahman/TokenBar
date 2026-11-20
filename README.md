@@ -9,13 +9,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/jhrahman/TokenBar/releases/download/v0.2.0/TokenBar-0.2.0.dmg">
+  <a href="https://github.com/jhrahman/TokenBar/releases/download/v0.2.1/TokenBar-0.2.1.dmg">
     <img alt="Download TokenBar for macOS (.dmg)" src="https://img.shields.io/badge/%E2%AC%87%20Download-TokenBar%20for%20macOS%20(.dmg)-E8603C?style=for-the-badge&logo=apple&logoColor=white">
   </a>
 </p>
 
 <p align="center">
-  <img alt="Version 0.2.0" src="https://img.shields.io/badge/version-0.2.0-E8603C?style=for-the-badge">
+  <img alt="Version 0.2.1" src="https://img.shields.io/badge/version-0.2.1-E8603C?style=for-the-badge">
   <img alt="macOS 13 and newer" src="https://img.shields.io/badge/macOS-13%2B-1C1D21?style=for-the-badge&logo=apple&logoColor=white">
   <img alt="Apple Silicon and Intel" src="https://img.shields.io/badge/Apple%20Silicon%20%7C%20Intel-universal-2FBF9F?style=for-the-badge">
 </p>
@@ -81,7 +81,7 @@ There are two ways to get TokenBar. Downloading a release is the easy one. Build
 
 ### Option A: Download a release
 
-1. Click the **Download** badge at the top of this page to get `TokenBar-0.2.0.dmg` (or find it on the [latest release](https://github.com/jhrahman/TokenBar/releases/latest))
+1. Click the **Download** badge at the top of this page to get `TokenBar-0.2.1.dmg` (or find it on the [latest release](https://github.com/jhrahman/TokenBar/releases/latest))
 2. Double click the disk image and drag TokenBar onto the Applications shortcut
 3. Jump to "Open it for the first time" below
 
@@ -108,15 +108,15 @@ cd TokenBar
 
 When it finishes you will have these in the `build` folder:
 
-- `TokenBar-0.2.0.dmg`, a disk image for installing
+- `TokenBar-0.2.1.dmg`, a disk image for installing
 - `TokenBar.app`, the app itself
-- `TokenBar-0.2.0.zip`, handy for sharing with your own devices
+- `TokenBar-0.2.1.zip`, handy for sharing with your own devices
 
 It is a universal app, so the same build runs on both Apple Silicon and Intel Macs.
 
 #### 3. Install from the disk image
 
-Double click `build/TokenBar-0.2.0.dmg`. A window opens showing TokenBar and an Applications shortcut. Drag TokenBar onto Applications, then eject the disk image. Keeping the app in Applications also lets the "Launch at login" option work properly.
+Double click `build/TokenBar-0.2.1.dmg`. A window opens showing TokenBar and an Applications shortcut. Drag TokenBar onto Applications, then eject the disk image. Keeping the app in Applications also lets the "Launch at login" option work properly.
 
 If you prefer, you can skip the disk image and drag `build/TokenBar.app` into Applications yourself.
 
